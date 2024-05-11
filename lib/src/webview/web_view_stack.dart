@@ -1,10 +1,20 @@
-import 'dart:developer';
+import 'dart:io';
 
+import 'package:asacoine/src/urls.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:webview_flutter_android/webview_flutter_android.dart'
+    as webview_flutter_android;
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart'
+    as webview_flutter_android;
+import 'package:image_picker/image_picker.dart' as image_picker;
 import 'pull_to_refresh.dart';
 
 class WebViewStack extends StatefulWidget {
@@ -52,7 +62,7 @@ class _WebViewStackState extends State<WebViewStack> {
           },
           onNavigationRequest: (navigation) {
             final host = Uri.parse(navigation.url).host;
-            if (host.contains('asacoine.com')) {
+            if (host.contains(AppUrls.baseUrlWithoutSchema)) {
               return NavigationDecision.navigate;
             } else {
               launchUrl(navigation.url);
@@ -66,6 +76,8 @@ class _WebViewStackState extends State<WebViewStack> {
 
   @override
   Widget build(BuildContext context) {
+    _setAndroidWebViewControllerConfig();
+
     return Stack(
       children: [
         WebViewWidget(
@@ -75,16 +87,90 @@ class _WebViewStackState extends State<WebViewStack> {
         if (loadingPercentage < 100)
           LinearProgressIndicator(
             value: loadingPercentage / 100.0,
+            minHeight: 2,
           ),
       ],
     );
   }
 
+  void _setAndroidWebViewControllerConfig() {
+    if (widget.controller.platform is AndroidWebViewController) {
+      final myAndroidController =
+          widget.controller.platform as AndroidWebViewController;
+      myAndroidController.setMediaPlaybackRequiresUserGesture(false);
+      myAndroidController.setOnShowFileSelector(_androidFilePicker);
+
+      myAndroidController.setOnPlatformPermissionRequest(
+        (request) {
+          if (request.types.first == WebViewPermissionResourceType.camera ||
+              request.types.first == WebViewPermissionResourceType.microphone) {
+            _requestCameraAndMicrophone();
+          }
+          request.grant();
+        },
+      );
+    }
+  }
+
   void launchUrl(String url) async {
-    log('tag: $url');
     const MethodChannel platformChannel =
         MethodChannel("com.asacoine.android/intent");
     Map<String, dynamic> arguments = {'web_url': url};
     await platformChannel.invokeMethod('sendUrl', arguments);
+  }
+
+  void _requestCameraAndMicrophone() async {
+    final statusCamera = Permission.camera.status;
+    final statusMicrophone = Permission.microphone.status;
+    if (!(await statusCamera.isGranted) ||
+        !(await statusMicrophone.isGranted)) {
+      await [Permission.camera, Permission.microphone].request();
+    }
+  }
+
+  Future<List<String>> _androidFilePicker(
+      webview_flutter_android.FileSelectorParams params) async {
+    //request permission
+    await [Permission.storage].request();
+
+    if (params.acceptTypes.any((type) => type == 'image/*')) {
+      final picker = image_picker.ImagePicker();
+      final photo =
+          await picker.pickImage(source: image_picker.ImageSource.camera);
+
+      if (photo == null) {
+        return [];
+      }
+      return [Uri.file(photo.path).toString()];
+    } else if (params.acceptTypes.any((type) => type == 'video/*')) {
+      final picker = image_picker.ImagePicker();
+      final vidFile = await picker.pickVideo(
+          source: ImageSource.camera, maxDuration: const Duration(seconds: 10));
+      if (vidFile == null) {
+        return [];
+      }
+      return [Uri.file(vidFile.path).toString()];
+    } else {
+      try {
+        if (params.mode ==
+            webview_flutter_android.FileSelectorMode.openMultiple) {
+          final attachments =
+              await FilePicker.platform.pickFiles(allowMultiple: true);
+          if (attachments == null) return [];
+
+          return attachments.files
+              .where((element) => element.path != null)
+              .map((e) => File(e.path!).uri.toString())
+              .toList();
+        } else {
+          final attachment = await FilePicker.platform.pickFiles();
+          if (attachment == null) return [];
+          File file = File(attachment.files.single.path!);
+          return [file.uri.toString()];
+        }
+      } catch (e) {
+        return [];
+      }
+    }
   }
 }

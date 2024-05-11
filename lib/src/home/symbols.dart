@@ -4,6 +4,8 @@ import 'package:asacoine/src/home/repository/home_repository.dart';
 import 'package:flutter/material.dart';
 
 import '../model/Symbol.dart';
+import '../urls.dart';
+import '../webview/web_view.dart';
 
 class SymbolsWidget extends StatefulWidget {
   const SymbolsWidget({super.key});
@@ -91,13 +93,15 @@ class _SymbolsWidgetState extends State<SymbolsWidget> {
                               children: [
                                 Row(
                                   textDirection: TextDirection.rtl,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Text(
                                             symbol.name,
@@ -119,8 +123,9 @@ class _SymbolsWidgetState extends State<SymbolsWidget> {
                                     Expanded(
                                       child: Text(
                                         formatDouble(symbol.price),
-                                        style:
-                                            Theme.of(context).textTheme.bodyLarge,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
                                         textAlign: TextAlign.center,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -149,7 +154,9 @@ class _SymbolsWidgetState extends State<SymbolsWidget> {
                                   child: Container(
                                     width: double.infinity,
                                     height: 0.4,
-                                    color: Theme.of(context).colorScheme.onBackground,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
                                   ),
                                 ),
                               ],
@@ -163,7 +170,32 @@ class _SymbolsWidgetState extends State<SymbolsWidget> {
                   }
                 },
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WebViewApp(
+                          url: AppUrls.login,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      "نمایش بیشتر...",
+                      textDirection: TextDirection.rtl,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

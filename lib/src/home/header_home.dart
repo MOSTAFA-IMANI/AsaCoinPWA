@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../generated/assets.dart';
 import '../urls.dart';
 import '../webview/web_view.dart';
 
@@ -16,11 +17,11 @@ class HeaderHomeWidget extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              alignment:Alignment.topRight,
+              alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(
-                  "assets/images/logo_type.png",
+                  Assets.imagesLogoType,
                   height: 25,
                 ),
               ),
@@ -39,7 +40,7 @@ class HeaderHomeWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Lottie.asset(
-              "assets/anim/anim.json",
+              Assets.animAnim,
               height: 200,
               width: 300,
             ),

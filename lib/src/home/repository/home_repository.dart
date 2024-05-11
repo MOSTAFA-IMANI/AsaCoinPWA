@@ -1,6 +1,7 @@
-import 'dart:ffi';
-
+import 'package:asacoine/src/model/Feature.dart';
 import 'package:dio/dio.dart';
+
+import '../../../generated/assets.dart';
 import '../../model/Possibility.dart';
 import '../../model/Symbol.dart';
 
@@ -13,40 +14,53 @@ class HomeRepository {
     return _instance!;
   }
 
+  List<Feature> getFeatureOfExchange() {
+    return [
+      Feature(Assets.iconsAdvanceTransaction, "معاملات پیشرفته"),
+      Feature(Assets.iconsRealTime, "معاملات آنی"),
+      Feature(Assets.iconsWalletMoney, "کیف پول"),
+      Feature(Assets.iconsAirdrop, "ایردراپ"),
+      Feature(Assets.iconsReceived, "واریز"),
+      Feature(Assets.iconsPayment, "استیکینگ"),
+      Feature(Assets.iconsAsaVam, "آساوام"),
+      Feature(Assets.iconsFaucet, "فاست"),
+    ];
+  }
+
   List<Possibility> getPossibilities() {
     return [
       Possibility(
-        "assets/icons/binoculars.svg",
+        Assets.iconsBinoculars,
         "امکانات پیشرفته برای معاملات",
         "ابزارهای مدرن برای انجام معاملات از جمله حد سود و ضرر، پنل گزارش سود و زیان، امکان تنظیم هشدار قیمت و همچنین نمودارهای قیمتی و ابزارهای تحلیل بازار در اختیار شماست.",
       ),
       Possibility(
-        "assets/icons/chart.svg",
+        Assets.iconsChart,
         "لیست کردن انواع رمز ارز",
         "علاوه بر سادگی محیط کاربری، امنیت و سرعت بالا درکلیه تراکنش ها ، آساکوین تنها صرافی در بازار می باشد که هر نوع رمز ارزی را به در خواست مشتریان فراهم میکند.",
       ),
       Possibility(
-        "assets/icons/wallet.svg",
+        Assets.iconsWallet,
         "کیف‌ پول اختصاصی",
         "دارایی‌های شما در کیف‌ پول اختصاصی به صورت سرد نگه ‌داری می‌شود و دربرابر حمله‌های مختلف امنیت بالایی دارد.",
       ),
       Possibility(
-        "assets/icons/shield.svg",
+        Assets.iconsShield,
         "سپرهای امنیتی مدرن",
         "تیم امنیتی پیشرفته آساکوین با ابزارهای مدرن و به‌روز، همواره برای حفظ امنیت دارایی کاربران تلاش می‌کنند. ذخیره امن دارایی کاربران در کیف پول‌های سرد و تایید هویت دو عاملی از جمله این ابزارها هستند.",
       ),
       Possibility(
-        "assets/icons/variety.svg",
+        Assets.iconsVariety,
         "تنوع کوین و سبد معاملات",
         "معامله‌ی بهترین کوین‌های بازار در سه پایه بازار متفاوت و متنوع‌تر شدن سبد معاملات، یک ویژگی مهم برای کاربران حرفه‌ای است.",
       ),
       Possibility(
-        "assets/icons/auth.svg",
+        Assets.iconsAuth,
         "احراز هویت سریع",
         "در صرافی آساکوین، در کمتر از پنج دقیقه ثبت نام و معامله در پرسودترین بازارها را آغاز کنید.",
       ),
       Possibility(
-        "assets/icons/support.svg",
+        Assets.iconsSupport,
         "پشتیبانی حرفه‌ای",
         "پشتیبانی حرفه‌ای و ۲۴ ساعته‌ی آنلاین و تلفنی آساکوین، خیال کاربران را برای پاسخ به هر سوالی آسوده می‌کند.",
       ),

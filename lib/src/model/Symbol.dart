@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:asacoine/src/urls.dart';
+
 class Symbol {
   final String _logo;
   final String _name;
@@ -14,5 +16,5 @@ class Symbol {
 
   String get name => _name;
 
-  String get logo => "https://asacoine.com/$_logo";
+  String get logo => AppUrls.baseUrl + _logo;
 }

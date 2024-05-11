@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:asacoine/src/webview/pull_to_refresh.dart';
 import 'package:asacoine/src/webview/web_view_stack.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +22,9 @@ class _WebViewAppState extends State<WebViewApp> {
   void initState() {
     super.initState();
     dragGesturePullToRefresh = DragGesturePullToRefresh(3000, 10);
-    controller = WebViewController()
-      ..loadRequest(
+    controller = WebViewController(
+      onPermissionRequest: (req) => req.grant(),
+    )..loadRequest(
         Uri.parse(widget.url),
       );
 
