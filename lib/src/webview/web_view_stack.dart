@@ -1,20 +1,18 @@
 import 'dart:io';
 
 import 'package:asacoine/src/urls.dart';
+import 'package:asacoine/src/utils.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart'
     as webview_flutter_android;
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-import 'package:webview_flutter_android/webview_flutter_android.dart'
-    as webview_flutter_android;
-import 'package:image_picker/image_picker.dart' as image_picker;
+
 import 'pull_to_refresh.dart';
 
 class WebViewStack extends StatefulWidget {
@@ -65,7 +63,7 @@ class _WebViewStackState extends State<WebViewStack> {
             if (host.contains(AppUrls.baseUrlWithoutSchema)) {
               return NavigationDecision.navigate;
             } else {
-              launchUrl(navigation.url);
+              Utils.launchUrl(navigation.url);
               return NavigationDecision.prevent;
             }
           },
@@ -110,13 +108,6 @@ class _WebViewStackState extends State<WebViewStack> {
         },
       );
     }
-  }
-
-  void launchUrl(String url) async {
-    const MethodChannel platformChannel =
-        MethodChannel("com.asacoine.android/intent");
-    Map<String, dynamic> arguments = {'web_url': url};
-    await platformChannel.invokeMethod('sendUrl', arguments);
   }
 
   void _requestCameraAndMicrophone() async {

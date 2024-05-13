@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../generated/assets.dart';
 import '../urls.dart';
+import '../utils.dart';
 import '../webview/web_view.dart';
 
 class HeaderHomeWidget extends StatelessWidget {
@@ -69,7 +70,7 @@ class HeaderHomeWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 4),
               child: Row(
                 textDirection: TextDirection.rtl,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -99,6 +100,48 @@ class HeaderHomeWidget extends StatelessWidget {
                           ),
                         )
                       },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () =>
+                        {Utils.launchUrl("https://t.me/zp_cryptotraining")},
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text(
+                        "آموزش بازار ارز دیجیتال",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => {
+                      Utils.launchUrl("https://t.me/Zp_Academy/14")
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text(
+                        "آموزش ثبت نام در صرافی",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
                     ),
                   ),
                 ],

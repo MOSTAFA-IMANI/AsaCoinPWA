@@ -40,88 +40,85 @@ class _PossibilitiesWidgetState extends State<PossibilitiesWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "چرا باید آساکوین را انتخاب کنیم؟",
-                      textDirection: TextDirection.rtl,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 180,
-                  child: LoopPageView.builder(
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentPage = index;
-                      });
-                    },
-                    controller: controller,
-                    itemCount: possibilityList.length,
-                    itemBuilder: (context, index) {
-                      Possibility item = possibilityList[index];
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: SvgPicture.asset(
-                                  item.icon,
-                                  width: 24,
-                                  height: 24,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Text(
-                                item.title,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                item.description,
-                                textAlign: TextAlign.center,
-                                textDirection: TextDirection.rtl,
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              right: 20.0,
-              bottom: 10.0,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: DotsIndicator(
-                  dotsCount: possibilityList.length,
-                  position: _currentPage,
-                  decorator: DotsDecorator(
-                    color: Colors.grey,
-                    activeColor: Theme.of(context).colorScheme.primary,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "چرا باید آساکوین را انتخاب کنیم؟",
+                    textDirection: TextDirection.rtl,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
               ),
+              SizedBox(
+                height: 180,
+                child: LoopPageView.builder(
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  controller: controller,
+                  itemCount: possibilityList.length,
+                  itemBuilder: (context, index) {
+                    Possibility item = possibilityList[index];
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SvgPicture.asset(
+                                item.icon,
+                                width: 24,
+                                height: 24,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              item.title,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              item.description,
+                              textAlign: TextAlign.center,
+                              textDirection: TextDirection.rtl,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            right: 20.0,
+            bottom: 10.0,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: DotsIndicator(
+                dotsCount: possibilityList.length,
+                position: _currentPage,
+                decorator: DotsDecorator(
+                  color: Colors.grey,
+                  activeColor: Theme.of(context).colorScheme.primary,
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

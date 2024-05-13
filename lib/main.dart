@@ -17,17 +17,18 @@ class MyApp extends StatelessWidget {
     MaterialTheme materialTheme = MaterialTheme(textTheme);
 
     final router = GoRouter(
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeWidget(),
-        ),
-        GoRoute(
-          path: '/',
-          builder: (context, state) => WebViewApp(url: state.fullPath!),
-        ),
-      ],
-    );
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => const HomeWidget(),
+          ),
+        ],
+        errorBuilder: ((context, state) {
+          if (state.uri.toString().isNotEmpty) {
+            return WebViewApp(url: state.uri.toString());
+          }
+          return const Text("not found");
+        }));
 
     return MaterialApp.router(
       routerConfig: router,

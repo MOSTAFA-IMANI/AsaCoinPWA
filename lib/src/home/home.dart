@@ -11,15 +11,20 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          HeaderHomeWidget(),
-          PossibilitiesWidget(),
-          FeatureExchangeWidget(),
-          SymbolsWidget(),
-          FooterWidget()
-        ],
+    return const SizedBox(
+      width: double.infinity,
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              HeaderHomeWidget(),
+              FeatureExchangeWidget(),
+              PossibilitiesWidget(),
+              SymbolsWidget(),
+              FooterWidget()
+            ],
+          ),
+        ),
       ),
     );
   }
