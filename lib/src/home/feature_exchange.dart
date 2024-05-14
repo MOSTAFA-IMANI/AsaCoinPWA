@@ -2,6 +2,9 @@ import 'package:asacoine/src/home/repository/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../utils.dart';
+import '../webview/web_view.dart';
+
 class FeatureExchangeWidget extends StatelessWidget {
   const FeatureExchangeWidget({super.key});
 
@@ -16,27 +19,51 @@ class FeatureExchangeWidget extends StatelessWidget {
         crossAxisCount: 4,
         shrinkWrap: true,
         children: featureList.map((item) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SvgPicture.asset(
-                  item.icon,
-                  colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.onBackground,
-                    BlendMode.srcIn,
+          return Card(
+            color: Colors.transparent,
+            shadowColor: Colors.transparent,
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                if (item.isInternalLink) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WebViewApp(
+                        url: item.link,
+                      ),
+                    ),
+                  );
+                } else {
+                  Utils.launchUrl(item.link);
+                }
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: SvgPicture.asset(
+                      item.icon,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.onBackground,
+                        BlendMode.srcIn,
+                      ),
+                      height: 28,
+                      width: 28,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                  height: 28,
-                  width: 28,
-                  fit: BoxFit.fill,
-                ),
+                  Text(
+                    item.name,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              Text(
-                item.name,
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
+            ),
           );
         }).toList(),
       ),

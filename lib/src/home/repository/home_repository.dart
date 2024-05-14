@@ -16,14 +16,54 @@ class HomeRepository {
 
   List<Feature> getFeatureOfExchange() {
     return [
-      Feature(Assets.iconsAdvanceTransaction, "معاملات پیشرفته"),
-      Feature(Assets.iconsRealTime, "معاملات آنی"),
-      Feature(Assets.iconsWalletMoney, "کیف پول"),
-      Feature(Assets.iconsAirdrop, "ایردراپ"),
-      Feature(Assets.iconsReceived, "واریز"),
-      Feature(Assets.iconsPayment, "استیکینگ"),
-      Feature(Assets.iconsAsaVam, "آساوام"),
-      Feature(Assets.iconsFaucet, "فاست"),
+      Feature(
+        Assets.iconsAdvanceTransaction,
+        "معاملات پیشرفته",
+        "https://panel.asacoine.com/panel/simple/trade/?pairSymbol=BTC-USDT",
+        true,
+      ),
+      Feature(
+        Assets.iconsRealTime,
+        "معاملات آنی",
+        "https://panel.asacoine.com/panel/simple/trade/?pairSymbol=BTC-USDT",
+        true,
+      ),
+      Feature(
+        Assets.iconsWalletMoney,
+        "کیف پول",
+        "https://panel.asacoine.com/panel/wallets/",
+        true,
+      ),
+      Feature(
+        Assets.iconsAirdrop,
+        "ایردراپ",
+        "https://t.me/zeehnpolsaz",
+        false,
+      ),
+      Feature(
+        Assets.iconsReceived,
+        "واریز",
+        "https://panel.asacoine.com/panel/wallets/",
+        true,
+      ),
+      Feature(
+        Assets.iconsPayment,
+        "استیکینگ",
+        "https://panel.asacoine.com/panel/staking/",
+        true,
+      ),
+      Feature(
+        Assets.iconsAsaVam,
+        "آساوام",
+        "https://panel.asacoine.com/panel/loan/",
+        true,
+      ),
+      Feature(
+        Assets.iconsFaucet,
+        "فاست",
+        "https://panel.asacoine.com/panel/fast/",
+        true,
+      ),
     ];
   }
 
