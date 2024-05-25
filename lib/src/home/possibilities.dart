@@ -124,7 +124,7 @@ class _PossibilitiesWidgetState extends State<PossibilitiesWidget> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 6), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _currentPage = (_currentPage + 1) % possibilityList.length; // Wrap around
       controller.animateToPage(
         _currentPage,

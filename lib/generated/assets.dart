@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String animAnim = 'assets/anim/anim.json';
+  static const String fontsPeydaMed = 'assets/fonts/peyda_med.ttf';
   static const String iconsAdvanceTransaction = 'assets/icons/advance_transaction.svg';
   static const String iconsAirdrop = 'assets/icons/airdrop.svg';
   static const String iconsAsaVam = 'assets/icons/asa_vam.svg';

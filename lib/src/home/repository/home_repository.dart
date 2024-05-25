@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:asacoine/src/model/AppBanner.dart';
 import 'package:asacoine/src/model/Feature.dart';
+import 'package:asacoine/src/model/ResponseNetwork.dart';
 import 'package:dio/dio.dart';
 
 import '../../../generated/assets.dart';
@@ -111,17 +115,39 @@ class HomeRepository {
     final response = await Dio().get(
         "https://api.asacoine.com/api/v1/exchange/symbols?page=1&limit=5&order=1");
     int count = response.data["pagination"]["limit"];
-    print(response.data);
     List<Symbol> symbolList = [];
     for (int i = 0; i < count; i++) {
       String icon = response.data["result"][i]["baseCurrency"]["image"];
       String name = response.data["result"][i]["fullName"];
       double price = response.data["result"][i]["buy"];
       double changeRate =
-          double.parse(response.data["result"][i]["changeRate"].toString());
+      double.parse(response.data["result"][i]["changeRate"].toString());
       Symbol symbol = Symbol(icon, name, price, changeRate);
       symbolList.add(symbol);
     }
     return symbolList;
+  }
+
+
+  Future<ResponseNetwork<List<AppBanner>>> getBanners() async {
+    try {
+      final response = await Dio().get(
+          "http://rymon-afzar.ir/google-play/asacoine/api/android-home-banner.json");
+
+      Map<String, dynamic> jsonData = response.data;
+      List<dynamic> bannersJson = jsonData['banners'];
+
+      List<AppBanner> banners =
+      bannersJson.map((json) => AppBanner.fromJson(json)).toList();
+
+      ResponseNetwork<List<AppBanner>> responseNetwork =
+      (response.statusCode == 200)
+          ? ResponseNetwork(banners, true)
+          : ResponseNetwork(<AppBanner>[], false);
+
+      return responseNetwork;
+    } on DioException catch (e) {
+      return ResponseNetwork(<AppBanner>[], false);
+    }
   }
 }
